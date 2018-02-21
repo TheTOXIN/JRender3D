@@ -34,7 +34,7 @@ public class Render {
 
         figure.add(new Triangle(
             new Vertex(-100, 100, -100),
-            new Vertex(-100, -100, -100),
+            new Vertex(100, -100, -100),
             new Vertex(-100, -100, 100),
             Color.GREEN
         ));

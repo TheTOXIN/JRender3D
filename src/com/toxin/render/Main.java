@@ -29,11 +29,21 @@ public class Main {
                 g2.fillRect(0, 0, getWidth(), getHeight());
 
                 double heading = Math.toRadians(headingSlider.getValue());
-                Matrix transform = new Matrix(new double[] {
-                    Math.cos(heading), 0, -Math.sin(heading),
-                    0,                 1,  0,
-                    Math.sin(heading), 0,  Math.cos(heading)
+                double pitch = Math.toRadians(pitchSlider.getValue());
+
+                Matrix headingTrandform = new Matrix(new double[] {
+                    Math.cos(heading),  0, Math.sin(heading),
+                    0,                  1, 0,
+                    -Math.sin(heading), 0, Math.cos(heading)
                 });
+
+                Matrix pitchTransform = new Matrix(new double[] {
+                    1,  0,               0,
+                    0,  Math.cos(pitch), Math.sin(pitch),
+                    0, -Math.sin(pitch), Math.cos(pitch)
+                });
+
+                Matrix transform = headingTrandform.multiply(pitchTransform);
 
                 g2.translate(getWidth() / 2, getHeight() / 2);
                 g2.setColor(Color.WHITE);
@@ -55,7 +65,11 @@ public class Main {
             }
         };
 
+        headingSlider.addChangeListener(e -> renderPanel.repaint());
+        pitchSlider.addChangeListener(e -> renderPanel.repaint());
+
         pane.add(renderPanel, BorderLayout.CENTER);
+
         frame.setSize(400, 400);
         frame.setVisible(true);
     }
